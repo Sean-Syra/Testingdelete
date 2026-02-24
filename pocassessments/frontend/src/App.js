@@ -35,7 +35,13 @@ function App() {
 
     recognition.onresult = (event) => {
         const speechResult = event.results[0][0].transcript.toLowerCase();
-        handleResponse(speechResult);
+        const matchedOption = questions[currentQuestionIndex].options.find(option => option.toLowerCase() === speechResult);
+        if (matchedOption) {
+            handleResponse(matchedOption);
+        } else {
+            alert("Please provide a valid response.");
+            askQuestion();
+        }
     };
 
     recognition.onerror = (event) => {
@@ -56,7 +62,6 @@ function App() {
         setResponses(updatedResponses);
         if (currentQuestionIndex < questions.length - 1) {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
-            askQuestion();
         } else {
             // Submit responses to the backend
             console.log("Responses submitted:", updatedResponses);
@@ -66,7 +71,7 @@ function App() {
 
     const handleOptionClick = (option) => {
         recognition.stop();
-        handleResponse(option.toLowerCase());
+        handleResponse(option);
     };
 
     return (
