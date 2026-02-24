@@ -38,13 +38,16 @@ function App() {
         const matchedOption = questions[currentQuestionIndex].options.find(option => option.toLowerCase() === speechResult);
         if (matchedOption) {
             handleResponse(matchedOption);
+            recognition.stop();
         } else {
+            recognition.stop();
             alert("Please provide a valid response.");
         }
     };
 
     recognition.onerror = (event) => {
         console.error("Speech recognition error", event);
+        alert("An error occurred during speech recognition: " + event.error);
     };
     const handleMicAccess = async () => {
         try {
