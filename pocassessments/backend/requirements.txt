@@ -2,3 +2,7 @@ fastapi
 uvicorn
 pydantic
 pymysql
+sqlalchemy
+python-multipart
+databases
+aiomysql
