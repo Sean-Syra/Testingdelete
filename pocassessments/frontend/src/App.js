@@ -62,6 +62,7 @@ function App() {
         setResponses(updatedResponses);
         if (currentQuestionIndex < questions.length - 1) {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
+            askQuestion();
         } else {
             // Submit responses to the backend
             console.log("Responses submitted:", updatedResponses);
