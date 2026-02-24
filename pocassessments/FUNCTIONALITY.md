@@ -380,3 +380,64 @@ Content-Type: application/json
    - Enhanced visual feedback during voice input
    - Result presentation dashboard
    - Export assessment reports
+# Project Architecture and Functional Flow
+
+## Overview
+
+The `pocassessments` project is designed to provide a comprehensive mental health assessment tool using the PHQ-9 and GAD-7 questionnaires. It consists of a backend server built with FastAPI and a frontend application developed with React.
+
+## Project Architecture
+
+### Backend
+
+- **Framework**: FastAPI
+- **Database**: MySQL
+- **ORM**: SQLAlchemy
+- **Key Components**:
+  - `main.py`: Initializes the FastAPI application and defines API endpoints.
+  - `database.py`: Configures the database connection and defines the database schema using SQLAlchemy.
+  - `models.py`: Contains Pydantic models for request validation.
+  - `scoring.py`: Implements the logic for scoring assessments.
+  - `setup_db.py`: Script to initialize and populate the database.
+
+### Frontend
+
+- **Framework**: React
+- **Key Components**:
+  - `App.js`: Main application component that handles the assessment flow and user interactions.
+  - `AssessmentFlowController.js`: Manages the flow of the assessment process.
+  - `VoiceInput.js`: Handles voice input using the Web Speech API.
+  - `ProgressTracker.js`: Displays the progress of the assessment.
+  - `ConfirmationUI.js`: Provides a confirmation interface for user responses.
+
+## Functional Flow
+
+1. **User Registration**:
+   - Users enter their name and email to start the assessment.
+   - The frontend validates the input and requests microphone access for voice input.
+
+2. **Assessment Process**:
+   - The assessment consists of 16 questions (9 for PHQ-9 and 7 for GAD-7).
+   - Users can respond by clicking options or using voice input.
+   - Responses are recorded and displayed in real-time.
+
+3. **Score Calculation**:
+   - Scores for PHQ-9 and GAD-7 are calculated based on user responses.
+   - Severity levels are determined using predefined thresholds.
+
+4. **Result Submission**:
+   - The final scores and severity levels are submitted to the backend.
+   - The backend stores the results in the database and returns a confirmation.
+
+5. **Result Display**:
+   - The frontend displays the assessment results, including scores and severity levels.
+   - Users can start a new assessment if desired.
+
+## Technical Details
+
+- **Speech Recognition**: Utilizes the Web Speech API for voice input.
+- **Data Persistence**: Uses MySQL for storing user data and assessment results.
+- **API Communication**: The frontend communicates with the backend via RESTful API endpoints.
+- **Error Handling**: Implements error handling for network issues and invalid inputs.
+
+This document provides a high-level overview of the project's architecture and functional flow. For more detailed information, refer to the source code and comments within the project files.
