@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 function App() {
     const [name, setName] = useState('');
@@ -23,15 +23,15 @@ function App() {
         if (isMicAccessGranted && currentQuestionIndex < questions.length) {
             askQuestion();
         }
-    }, [isMicAccessGranted, currentQuestionIndex, askQuestion, questions.length]);
+    }, [isMicAccessGranted, currentQuestionIndex, askQuestion]);
 
-    const askQuestion = () => {
+    const askQuestion = useCallback(() => {
         const utterThis = new SpeechSynthesisUtterance(questions[currentQuestionIndex].text);
         synth.speak(utterThis);
         utterThis.onend = () => {
             recognition.start();
         };
-    };
+    }, [currentQuestionIndex, questions]);
 
     recognition.onresult = (event) => {
         const speechResult = event.results[0][0].transcript.toLowerCase();
