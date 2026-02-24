@@ -1,10 +1,9 @@
 import React from 'react';
-import AssessmentFlowController from './components/AssessmentFlowController';
 
 function App() {
     return (
         <div className="App">
-            <AssessmentFlowController />
+            <h1>Welcome to the React App</h1>
         </div>
     );
 }
