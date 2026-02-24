@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, MetaData
 
 # Replace with your actual database URL
-DATABASE_URL = "sqlite:///./test.db"
+DATABASE_URL = "mysql+pymysql://username:password@localhost/dbname"
 
 engine = create_engine(DATABASE_URL)
 metadata = MetaData()

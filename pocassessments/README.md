@@ -48,8 +48,9 @@
 ## Database Setup
 
 1. **Database Configuration:**
-   - The project uses SQLite as the default database.
-   - The database URL is configured in `database.py` as `sqlite:///./test.db`.
+   - The project uses MySQL as the default database.
+   - The database URL is configured in `database.py` as `mysql+pymysql://username:password@localhost/dbname`.
+   - Replace `username`, `password`, `localhost`, and `dbname` with your MySQL credentials and database name.
    - You can change the database URL to point to your preferred database.
 
 2. **Initialize the Database:**
@@ -57,6 +58,7 @@
      ```bash
      cd pocassessments/backend
      ```
+   - Ensure your MySQL server is running and accessible.
    - Run the database setup script:
      ```bash
      python setup_db.py
