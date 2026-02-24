@@ -40,7 +40,6 @@ function App() {
             handleResponse(matchedOption);
         } else {
             alert("Please provide a valid response.");
-            askQuestion();
         }
     };
 
@@ -62,7 +61,6 @@ function App() {
         setResponses(updatedResponses);
         if (currentQuestionIndex < questions.length - 1) {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
-            askQuestion();
         } else {
             // Submit responses to the backend
             console.log("Responses submitted:", updatedResponses);
