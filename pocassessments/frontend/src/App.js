@@ -41,6 +41,7 @@ function App() {
     recognition.onerror = (event) => {
         console.error("Speech recognition error", event);
     };
+    const handleMicAccess = async () => {
         try {
             await navigator.mediaDevices.getUserMedia({ audio: true });
             setIsMicAccessGranted(true);
