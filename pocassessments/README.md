@@ -78,3 +78,4 @@
 
 - Start the backend server and the frontend application as described above.
 - Access the application via your web browser at `http://localhost:3000`.
+
