@@ -19,12 +19,6 @@ function App() {
     recognition.interimResults = false;
     recognition.lang = 'en-US';
 
-    useEffect(() => {
-        if (isMicAccessGranted && currentQuestionIndex < questions.length) {
-            askQuestion();
-        }
-    }, [isMicAccessGranted, currentQuestionIndex, askQuestion]);
-
     const askQuestion = useCallback(() => {
         const utterThis = new SpeechSynthesisUtterance(questions[currentQuestionIndex].text);
         synth.speak(utterThis);
@@ -32,6 +26,12 @@ function App() {
             recognition.start();
         };
     }, [currentQuestionIndex, questions]);
+
+    useEffect(() => {
+        if (isMicAccessGranted && currentQuestionIndex < questions.length) {
+            askQuestion();
+        }
+    }, [isMicAccessGranted, currentQuestionIndex, askQuestion]);
 
     recognition.onresult = (event) => {
         const speechResult = event.results[0][0].transcript.toLowerCase();
