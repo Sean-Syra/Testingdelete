@@ -23,7 +23,7 @@ function App() {
         if (isMicAccessGranted && currentQuestionIndex < questions.length) {
             askQuestion();
         }
-    }, [isMicAccessGranted, currentQuestionIndex]);
+    }, [isMicAccessGranted, currentQuestionIndex, askQuestion, questions.length]);
 
     const askQuestion = () => {
         const utterThis = new SpeechSynthesisUtterance(questions[currentQuestionIndex].text);
