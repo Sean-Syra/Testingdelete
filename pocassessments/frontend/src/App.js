@@ -90,30 +90,3 @@ function App() {
 }
 
 export default App;
-            // Submit responses to the backend
-            console.log("Responses submitted:", responses);
-        }
-    };
-
-    return (
-        <div className="App">
-            {!isMicAccessGranted ? (
-                <div>
-                    <h1>Enter your details</h1>
-                    <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-                    <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                    <button onClick={handleMicAccess}>Grant Microphone Access</button>
-                </div>
-            ) : (
-                <div>
-                    <h2>{questions[currentQuestionIndex].text}</h2>
-                    {questions[currentQuestionIndex].options.map((option, index) => (
-                        <button key={index} onClick={() => handleResponse(option)}>{option}</button>
-                    ))}
-                </div>
-            )}
-        </div>
-    );
-}
-
-export default App;
