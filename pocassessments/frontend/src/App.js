@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function App() {
     const [name, setName] = useState('');
@@ -13,20 +13,83 @@ function App() {
         // Add more questions as needed
     ];
 
-    const handleMicAccess = async () => {
+    const synth = window.speechSynthesis;
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    useEffect(() => {
+        if (isMicAccessGranted && currentQuestionIndex < questions.length) {
+            askQuestion();
+        }
+    }, [isMicAccessGranted, currentQuestionIndex]);
+
+    const askQuestion = () => {
+        const utterThis = new SpeechSynthesisUtterance(questions[currentQuestionIndex].text);
+        synth.speak(utterThis);
+        utterThis.onend = () => {
+            recognition.start();
+        };
+    };
+
+    recognition.onresult = (event) => {
+        const speechResult = event.results[0][0].transcript.toLowerCase();
+        handleResponse(speechResult);
+    };
+
+    recognition.onerror = (event) => {
+        console.error("Speech recognition error", event);
+    };
         try {
             await navigator.mediaDevices.getUserMedia({ audio: true });
             setIsMicAccessGranted(true);
+            askQuestion();
         } catch (error) {
             alert("Microphone access denied");
         }
     };
 
     const handleResponse = (response) => {
-        setResponses([...responses, response]);
+        const updatedResponses = [...responses, response];
+        setResponses(updatedResponses);
         if (currentQuestionIndex < questions.length - 1) {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
+            askQuestion();
         } else {
+            // Submit responses to the backend
+            console.log("Responses submitted:", updatedResponses);
+            // Add code to send responses to the backend
+        }
+    };
+
+    const handleOptionClick = (option) => {
+        recognition.stop();
+        handleResponse(option.toLowerCase());
+    };
+
+    return (
+        <div className="App">
+            {!isMicAccessGranted ? (
+                <div>
+                    <h1>Enter your details</h1>
+                    <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+                    <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <button onClick={handleMicAccess}>Grant Microphone Access</button>
+                </div>
+            ) : (
+                <div>
+                    <h2>{questions[currentQuestionIndex].text}</h2>
+                    {questions[currentQuestionIndex].options.map((option, index) => (
+                        <button key={index} onClick={() => handleOptionClick(option)}>{option}</button>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+}
+
+export default App;
             // Submit responses to the backend
             console.log("Responses submitted:", responses);
         }
